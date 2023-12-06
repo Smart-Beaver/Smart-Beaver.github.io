@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Psp 22 - Smart beaver - smart contract code generator docs</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Psp 22";
+        var mkdocs_page_input_path = "smart-contract-implementations/psp-22.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Smart beaver - smart contract code generator docs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Smart Beaver</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../getting-started/">Getting Started</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Code generator</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../code-generator/general-architecture/">General architecture</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Smart contract implementations</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../deploy-and-test/">How to deploy and test contracts</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Psp 22</a>
+    <ul class="current">
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../psp-34/">PSP-34</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../psp-37/">PSP-34</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Smart beaver - smart contract code generator docs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>Smart contract implementations &raquo;</li>
+      <li>Psp 22</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h2 id="psp-22">PSP-22</h2>
+<h2 id="build">Build</h2>
+<p>Install <code>cargo-contract</code> (https://crates.io/crates/cargo-contract)
+Step 1: <code>rustup component add rust-src</code>.</p>
+<p>Step 2: <code>cargo install --force --locked cargo-contract</code>.</p>
+<p>Step 3: (Optional) Install <code>dylint</code> for linting.</p>
+<p>(MacOS) <code>brew install openssl</code>
+<code>cargo install cargo-dylint dylint-link</code>.</p>
+<pre><code class="language-bash">cargo contract build --release --features &quot;contract&quot;
+</code></pre>
+<h2 id="about">About</h2>
+<h3 id="module-overview">Module Overview</h3>
+<ul>
+<li><code>lib.rs</code>: The main module that includes all other modules and re-exports key components.</li>
+<li><code>data.rs</code>: Defines structs and enums, which are used to manage token data and events.</li>
+<li><code>errors.rs</code>: Contains  enums for error handling.</li>
+<li><code>traits.rs</code>: Declares several traits like <code>PSP22</code>, <code>PSP22Metadata</code>, <code>PSP22Burnable</code>, <code>PSP22Mintable</code>, <code>PSP22Pausable</code>, <code>PSP22Wrapper</code>, and <code>Ownable</code>, which define the standard functionalities of PSP22 tokens.</li>
+</ul>
+<h3 id="librs"><code>lib.rs</code></h3>
+<ul>
+<li><code>Token</code>: Main struct representing a PSP22 token. It includes methods for token creation (<code>new</code>) and for emitting events (<code>emit_events</code>).</li>
+<li><code>Approval</code> and <code>Transfer</code>: Event structs used for emitting events related to token transfer and approval.</li>
+</ul>
+<h3 id="datars"><code>data.rs</code></h3>
+<ul>
+<li><code>PSP22Data</code>: A struct that maintains the state of all account balances and allowances. Includes methods for token supply management, balance queries, and allowance management.</li>
+<li><code>PSP22Event</code>: An enum representing events that occur during state changes of <code>PSP22Data</code>.</li>
+</ul>
+<h3 id="errorsrs"><code>errors.rs</code></h3>
+<ul>
+<li><code>PSP22Error</code>: An enum for PSP22-specific errors, such as insufficient balance or allowance.</li>
+<li><code>OwnableError</code>: An enum for errors related to ownership management.</li>
+</ul>
+<h3 id="traitsrs"><code>traits.rs</code></h3>
+<ul>
+<li><code>PSP22</code>: A trait defining the core functionalities of a PSP22 token, including methods for querying supply, balance, and allowance, and for executing transfers and approvals.</li>
+<li><code>PSP22Metadata</code>: A trait for accessing token metadata like name, symbol, and decimals.</li>
+<li><code>PSP22Burnable</code>: A trait for token burning functionalities.</li>
+<li><code>PSP22Mintable</code>: A trait for token minting functionalities.</li>
+<li><code>PSP22Pausable</code>: A trait for pausing and unpausing token transfers.</li>
+<li><code>PSP22Wrapper</code>: A trait for deposit and withdrawal functionalities.</li>
+<li><code>Ownable</code>: A trait for ownership management, including querying owner, transferring ownership, and renouncing ownership.</li>
+</ul>
+<h3 id="general-notes">General Notes</h3>
+<ul>
+<li>The library adheres to the <a href="https://github.com/w3f/PSPs/blob/master/PSPs/psp-22.md">PSP22 standard</a> for fungible tokens.</li>
+<li>Most methods in <code>PSP22Data</code> and the traits in <code>traits.rs</code> return <code>Result</code> types, indicating that they can fail with a <code>PSP22Error</code>.</li>
+<li>Events are an essential part of the library, used for signaling state changes like transfers and approvals.</li>
+</ul>
+<p>This documentation provides an overview of your Rust library's structure and functionalities. For a complete understanding, users should refer to the detailed comments and implementations within each module.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../deploy-and-test/" class="btn btn-neutral float-left" title="How to deploy and test contracts"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../psp-34/" class="btn btn-neutral float-right" title="PSP-34">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../deploy-and-test/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../psp-34/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
